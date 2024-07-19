@@ -1,0 +1,8 @@
+{
+  "name": "poliseg_20220660",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "5d528f06"
+}
