@@ -16,10 +16,10 @@
     <ion-textarea rows="8" [(ngModel)]="description"></ion-textarea>
   </ion-item>
   <ion-item>
-    <ion-label position="floating" *ngIf="photo">Foto agregada</ion-label>
-    <ion-button (click)="addPhotoToGallery()" *ngIf="!photo">
+    <ion-button (click)="addPhotoToGallery()">
       <ion-icon name="camera"></ion-icon>
     </ion-button>
+    <ion-label *ngIf="photo">Foto agregada</ion-label>
   </ion-item>
   <ion-button (click)="addEvent()">Añadir</ion-button>
   <ion-label style="color: red;" *ngIf="error">{{ error }}</ion-label>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">poliseg_20220660</string>
+    <string name="title_activity_main">poliseg_20220660</string>
+    <string name="package_name">com.berlyn.poliseg</string>
+    <string name="custom_url_scheme">com.berlyn.poliseg</string>
+</resources>

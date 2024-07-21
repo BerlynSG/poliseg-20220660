@@ -3,6 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule, Platform } from '@ionic/angular';
 import { DataService, Incident } from '../services/data.service';
+import { Directory, Filesystem } from '@capacitor/filesystem';
 
 @Component({
   selector: 'app-view-message',
@@ -24,6 +25,11 @@ export class ViewMessagePage implements OnInit {
   async setEventData() {
     const id = this.activatedRoute.snapshot.paramMap.get('id') as string;
     this.incident = await this.data.getIncidentById(parseInt(id, 10));
+    const readFile = await Filesystem.readFile({
+      path: this.incident.photo.filepath,
+      directory: Directory.Data,
+    });
+    this.incident.photo.webviewPath = `data:image/jpeg;base64,${readFile.data}`;
   }
 
   getBackButtonText() {
