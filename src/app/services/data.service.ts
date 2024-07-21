@@ -1,11 +1,22 @@
 import { Injectable } from '@angular/core';
 
+import { Storage } from '@ionic/storage-angular';
+import { UserPhoto } from './photo.service';
+
 export interface Message {
   fromName: string;
   subject: string;
   date: string;
   id: number;
   read: boolean;
+}
+
+export interface Incident {
+  id: number;
+  title: string;
+  description: string;
+  date: string;
+  photo: UserPhoto;
 }
 
 @Injectable({
@@ -71,13 +82,43 @@ export class DataService {
     }
   ];
 
-  constructor() { }
-
   public getMessages(): Message[] {
     return this.messages;
   }
 
   public getMessageById(id: number): Message {
     return this.messages[id];
+  }
+  
+  constructor(private storage: Storage) {
+    this.createDB()
+  }
+
+  async createDB() {
+    this.storage.create()
+    if (!(await this.storage.keys()).includes("Incidents")){
+      var incident_list: Incident[] = []
+      this.storage.set("Incidents", incident_list)
+    }
+  }
+
+  public async getIncidents(): Promise<Incident[]> {
+    return await this.storage.get("Incidents");
+  }
+
+  public async getIncidentById(id: number): Promise<Incident> {
+    const incident_default: Incident = { id: -1, title:"", description:"", date:"", photo:{ filepath:"", webviewPath:""} }
+    var incident_list: Incident[] =  await this.storage.get("Incidents");
+    incident_list = incident_list.filter((value: Incident, index: number, array: Incident[]) => value.id == id)
+    return incident_list.length > 0 ? incident_list[0] : incident_default
+  }
+
+  public async addIncident(incident: Incident) {
+    var incident_list: Incident[] =  await this.storage.get("Incidents");
+    while (incident_list.filter((value: Incident, index: number, array: Incident[]) => value.id == incident.id).length > 0) {
+      incident.id += 1;
+    }
+    incident_list.push(incident)
+    await this.storage.set("Incidents", incident_list)
   }
 }

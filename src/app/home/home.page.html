@@ -1,8 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Inbox
+      Incidentes
     </ion-title>
+    <div class="buttons">
+      <ion-button [routerLink]="'/add'">+</ion-button>
+    </div>
   </ion-toolbar>
 </ion-header>
 
@@ -14,12 +17,12 @@
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">
-        Inbox
+        Incidentes
       </ion-title>
     </ion-toolbar>
   </ion-header>
   
   <ion-list>
-    <app-message *ngFor="let message of getMessages()" [message]="message"></app-message>
+    <app-message *ngFor="let incident of incidents" [incident]="incident"></app-message>
   </ion-list>
 </ion-content>
